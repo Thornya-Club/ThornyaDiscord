@@ -1,0 +1,42 @@
+#Token do Bot
+token: "Nzg0NTgzMTQ5NzYxMDY5MDc2.X8rZ_w.j35otM1zTM3N-IPTWMr3mperlOQ"
+#descricao do bot
+description: "play.thornya.club"
+#prefixo do bot
+prefix: "$"
+
+mysql:
+  username: root
+  host: localhost
+  port: 3306
+  enable: true
+  password: Thornya@$$$$
+  database: thornya
+
+#####################################
+#########DISCORD INTEGRATION#########
+#####################################
+discord:
+  ##################################Variaveis####################################
+  # $nametag para pegar a nametag do discord do jogador que enviou a solicitação.
+  # $id para pegar o ID do discord do jogador que enviou a solicitação.
+  # $nickname do jogador que recebeu a solicitação.
+  # String comando tem que ser somente $comando ( Aceitar ou negar)
+  ##############################################################################
+  verifymessage:
+    - "&2&m                           &r&2[ &aVerificar &3Discord&2 ]&2&m                           "
+    - " "
+    - "&7Solicitação para verificar sua conta do Discord recebida."
+    - " "
+    - "&aDe: &2$nametag"
+    - "&aPara: &9$nickname"
+    - " "
+    - "$comando"
+    - " "
+    - "&2&m                                                                                "
+  #Use $player para pegar o nome do jogador
+  rewardscommand:
+    - "give $player stone 64"
+    - "give $player diamond 64"
+#################Thornya#################
+message_reload: "&aConfigurações carregadas com sucesso."

@@ -1,0 +1,18 @@
+name: ThornyaPlugin
+version: ${project.version}
+main: thornyaplugin.thornyaplugin.ThornyaPlugin
+api-version: 1.16
+authors: [ Gusttavo13, Relativo ]
+description: Plugin que faz tudo
+website: https://thornya.club
+softdepend:
+  - SimpleClans
+  - Essentials
+depend:
+  - SimpleClans
+  - Essentials
+commands:
+  clans:
+    description: comando dos clans
+  verificar:
+    description: verificar no discord
