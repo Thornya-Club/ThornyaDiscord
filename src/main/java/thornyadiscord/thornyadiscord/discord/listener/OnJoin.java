@@ -1,14 +1,14 @@
-package thornyaplugin.thornyaplugin.discord.listener;
+package thornyadiscord.thornyadiscord.discord.listener;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 public class OnJoin extends ListenerAdapter {
-    private ThornyaPlugin pl;
-    public OnJoin(ThornyaPlugin main){
+    private ThornyaDiscord pl;
+    public OnJoin(ThornyaDiscord main){
         this.pl = main;
     }
 

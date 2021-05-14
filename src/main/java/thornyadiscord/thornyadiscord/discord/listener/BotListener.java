@@ -1,4 +1,4 @@
-package thornyaplugin.thornyaplugin.discord.listener;
+package thornyadiscord.thornyadiscord.discord.listener;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -8,10 +8,9 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.user.update.UserUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.sacredlabyrinth.phaed.simpleclans.Clan;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.awt.*;
 import java.awt.List;
@@ -24,9 +23,9 @@ import java.util.stream.Collectors;
 
 public class BotListener extends ListenerAdapter {
 
-    private ThornyaPlugin pl;
+    private ThornyaDiscord pl;
 
-    public BotListener(ThornyaPlugin main){
+    public BotListener(ThornyaDiscord main){
         this.pl = main;
     }
 
@@ -48,24 +47,25 @@ public class BotListener extends ListenerAdapter {
         String[] args = e.getMessage().getContentRaw().split(" ");
         String idMsg = e.getChannel().getLatestMessageId();
         String cmd = args[0];
-        if(cmd.equalsIgnoreCase(ThornyaPlugin.PREFIX + "perfil")){
+        if(cmd.equalsIgnoreCase(pl.PREFIX + "perfil")){
             if(args.length == 1){
                 if (pl.sqliv.hasVerifyID(e.getAuthor().getId())) {
                     String nick = pl.sqliv.getNick(e.getAuthor().getId());
-                    String cargo = pl.ess.getUser(pl.sqliv.getNick(e.getAuthor().getId())).getGroup();
-                    try {
-                        pl.createPerfilPlayer(nick, cargo);
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
+                    //String cargo = pl.ess.getUser(pl.sqliv.getNick(e.getAuthor().getId())).getGroup();
+                    //try {
+                        //pl.createPerfilPlayer(nick, cargo);
+                    //} catch (IOException ioException) {
+                    //    ioException.printStackTrace();
+                    //}
                     e.getChannel().sendMessage(e.getAuthor().getAsMention()).addFile(new File(pl.getDataFolder().getPath() + "\\data\\images\\perfil\\perfil.png")).queue();
                 }else{
                     e.getChannel().sendMessage("**Você não é verificado!**").complete();
                 }
             }else if(args.length == 2){
+                /*
                 if(pl.sqliv.hasVerifyNick(args[1]) && pl.ess.getUser(args[1]) != null){
                     try {
-                        pl.createPerfilPlayer(args[1], pl.ess.getUser(args[1]).getGroup());
+                        //pl.createPerfilPlayer(args[1], pl.ess.getUser(args[1]).getGroup());
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -73,12 +73,14 @@ public class BotListener extends ListenerAdapter {
                 }else{
                     e.getMessage().getChannel().sendMessage("Jogador não é verificado!").complete();
                 }
+                */
             }else{
                 e.getMessage().getChannel().sendMessage("Use **$perfil** - Mostra o seu perfil\nUse **$perfil {nick}** - Mostra o perfil de outro player").complete();
             }
         }
+        /*
         //Comando de ListarClan
-        if (cmd.equalsIgnoreCase(ThornyaPlugin.PREFIX + "clans")) {
+        if (cmd.equalsIgnoreCase(pl.PREFIX + "clans")) {
             EmbedBuilder eb = new EmbedBuilder();
             if (!pl.sc.getClanManager().getClans().isEmpty()) {
                 eb.setColor(new Color(7946786)).setTitle("Clans do Servidor");
@@ -139,7 +141,7 @@ public class BotListener extends ListenerAdapter {
                 e.getMessage().getChannel().sendMessage("Nenhum jogador online!").queue();
             }
         }
-
+            */
         //if (cmd.equalsIgnoreCase(ThornyaPlugin.PREFIX + "clan")) {
         //}
     }

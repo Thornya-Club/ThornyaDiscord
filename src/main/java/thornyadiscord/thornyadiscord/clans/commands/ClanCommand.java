@@ -1,23 +1,23 @@
-package thornyaplugin.thornyaplugin.clans.commands;
+package thornyadiscord.thornyadiscord.clans.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
+
 
 public class ClanCommand implements CommandExecutor {
-    private ThornyaPlugin pl;
+    private ThornyaDiscord pl;
 
-    public ClanCommand(ThornyaPlugin main){
+    public ClanCommand(ThornyaDiscord main){
         this.pl = main;
     }
 
 
     @Override
     public boolean onCommand(@NotNull CommandSender snd, @NotNull Command cmd, @NotNull String s, @NotNull String[] args) {
-
+        /*
         Player p = (Player)snd;
         if (cmd.getName().equalsIgnoreCase("clans")) {
             if(args.length == 1){
@@ -44,6 +44,8 @@ public class ClanCommand implements CommandExecutor {
                 //}
             }
         }
+
+         */
 
 
         return false;

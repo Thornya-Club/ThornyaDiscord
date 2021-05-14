@@ -1,61 +1,47 @@
-package thornyaplugin.thornyaplugin;
+package thornyadiscord.thornyadiscord;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.register.payment.methods.VaultEco;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-import thornyaplugin.thornyaplugin.clans.Clan;
-import thornyaplugin.thornyaplugin.clans.commands.ClanCommand;
-import thornyaplugin.thornyaplugin.commands.Thornya;
-import thornyaplugin.thornyaplugin.discord.BotManager;
 
-import java.awt.*;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import thornyadiscord.thornyadiscord.clans.Clan;
+import thornyadiscord.thornyadiscord.clans.commands.ClanCommand;
+import thornyadiscord.thornyadiscord.discord.BotManager;
+import thornyadiscord.thornyadiscord.discord.Embeds.Embeds;
+import thornyadiscord.thornyadiscord.verificar.SQLite.SQLite;
+import thornyadiscord.thornyadiscord.verificar.commands.Verificar;
+
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public final class ThornyaDiscord extends JavaPlugin {
 
-    public SQLite sqli;
-    public thornyaplugin.thornyaplugin.verificar.SQLite.SQLite sqliv;
+    public SQLite sqliv;
     private File file = null;
     private FileConfiguration fileC = null;
     private File translate = null;
     private FileConfiguration fctranslate = null;
-    public SimpleClans sc;
+    //public SimpleClans sc;
     public BotManager bot;
-    public Essentials ess = (Essentials) getServer().getPluginManager().getPlugin("Essentials");
-    Plugin clanPL = getServer().getPluginManager().getPlugin("SimpleClans");
+    //public Essentials ess = (Essentials) getServer().getPluginManager().getPlugin("Essentials");
+    //Plugin clanPL = getServer().getPluginManager().getPlugin("SimpleClans");
     public Clan clan;
-    public clanschannel cc;
-    public cargosDiscord cD;
     public static String PREFIX;
+    public Embeds emb;
 
     @Override
     public void onEnable() {
         carregarconfigs();
         PREFIX = getFile("configuration.yml").getString("prefix");
-        this.candidatosVar = new candidatos(this);
-        this.staff = new staff(this);
-        this.cD = new cargosDiscord(this);
         //this.sqli = new SQLite(this);
+        emb = new Embeds(this);
         bot = new BotManager(this);
-        this.cc = new clanschannel(this);
         clan = new Clan(this);
-        sqliv = new thornyaplugin.thornyaplugin.verificar.SQLite.SQLite(this);
+        sqliv = new SQLite(this);
         registrarComandos();
     }
 
@@ -66,7 +52,7 @@ public final class ThornyaDiscord extends JavaPlugin {
     }
     public void registrarComandos(){
         registrarComando("clans", new ClanCommand(this));
-        registrarComando("verificar", new Prefeitura(this));
+        registrarComando("verificar", new Verificar(this));
     }
     public void registrarComando(String nome, CommandExecutor comando) {
         getCommand(nome).setExecutor(comando);

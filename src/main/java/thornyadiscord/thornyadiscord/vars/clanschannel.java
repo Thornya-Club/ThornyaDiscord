@@ -1,9 +1,6 @@
-package thornyaplugin.thornyaplugin.vars;
+package thornyadiscord.thornyadiscord.vars;
 
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +8,9 @@ import java.util.Map;
 public class clanschannel {
 
     public Map<String, String> clanschannel = new HashMap<String, String>();
-    private ThornyaPlugin pl;
+    private ThornyaDiscord pl;
 
-    public  clanschannel(ThornyaPlugin main){
+    public  clanschannel(ThornyaDiscord main){
         this.pl = main;
         clansChannelUpdate();
     }

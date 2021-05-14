@@ -1,17 +1,17 @@
-package thornyaplugin.thornyaplugin.verificar.SQLite;
+package thornyadiscord.thornyadiscord.verificar.SQLite;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.plugin.Plugin;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.awt.*;
 import java.sql.*;
 import java.util.Date;
 
 public class SQLite {
-    private final ThornyaPlugin pl;
+    private final ThornyaDiscord pl;
     String url = null;
-    public SQLite(ThornyaPlugin main){
+    public SQLite(ThornyaDiscord main){
         this.pl = main;
         url = "jdbc:sqlite:" + pl.getDataFolder() + "/verification.db";
         createNewTable();
@@ -207,7 +207,7 @@ public class SQLite {
                 idDiscord = rs.getString("discord");
             }
             rs.close();
-            pstmt.close();
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -228,7 +228,7 @@ public class SQLite {
                 nick = rs.getString("nick");
             }
             rs.close();
-            pstmt.close();
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -249,7 +249,7 @@ public class SQLite {
                 time = rs.getDouble("timestamp");
             }
             rs.close();
-            pstmt.close();
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

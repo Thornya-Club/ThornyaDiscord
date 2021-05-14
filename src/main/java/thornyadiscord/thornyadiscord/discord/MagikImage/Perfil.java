@@ -1,4 +1,16 @@
-package thornyadiscord.thornyadiscord.MagikImage;
+package thornyadiscord.thornyadiscord.discord.MagikImage;
+
+import org.bukkit.Bukkit;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class Perfil {
     private ThornyaDiscord pl;
@@ -10,16 +22,17 @@ public class Perfil {
     public boolean createPerfilPlayer(String nick, String cargo) throws IOException {
         //staff 730x160 red
         //https://minotar.net/avatar/user/100.png
-        Files.deleteIfExists(Paths.get(getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png"));
+
+        Files.deleteIfExists(Paths.get(pl.getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png"));
         InputStream inputStream = new URL("https://minotar.net/avatar/" + nick + "/200.png").openStream();
-        Files.copy(inputStream, Paths.get(getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png"), StandardCopyOption.REPLACE_EXISTING);
-        String avatar = getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png";
-        String bg = getDataFolder().getPath() + "\\data\\images\\perfil\\Background.png";
-        String perfil = getDataFolder().getPath() + "\\data\\images\\perfil\\perfil.png";
-        String outputNick = getDataFolder().getPath() + "\\data\\images\\perfil\\perfilName.png";
-        String outputCargo = getDataFolder().getPath() + "\\data\\images\\perfil\\cargoName.png";
-        String font = "\"" + getDataFolder().getPath().replace("\\", "/") + "/data/images/perfil/FiraCode-SemiBold.ttf\"";
-        String isStaff = getDataFolder().getPath() + "\\data\\images\\perfil\\isSTAFF.png";
+        Files.copy(inputStream, Paths.get(pl.getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png"), StandardCopyOption.REPLACE_EXISTING);
+        String avatar = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\avatar.png";
+        String bg = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\Background.png";
+        String perfil = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\perfil.png";
+        String outputNick = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\perfilName.png";
+        String outputCargo = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\cargoName.png";
+        String font = "\"" + pl.getDataFolder().getPath().replace("\\", "/") + "/data/images/perfil/FiraCode-SemiBold.ttf\"";
+        String isStaff = pl.getDataFolder().getPath() + "\\data\\images\\perfil\\isSTAFF.png";
         /////////////Creation////////////////
         ProcessBuilder pbNick = new ProcessBuilder("magick", "-size", "900x200", "canvas:none", "-font", font, "-pointsize", "60", "-draw", "\"text 205,85 '$nick$'\"".replace("$nick$", nick), "\"$path_output$\"".replace("$path_output$", outputNick));
 
@@ -92,6 +105,7 @@ public class Perfil {
         } catch (Exception e) {
             return false;
         }
+        /*
         if (staff.staffs.containsKey(nick)) {
             ProcessBuilder pbIsStaffC = new ProcessBuilder("magick", "composite", isStaff, perfil, perfil);
 
@@ -107,7 +121,7 @@ public class Perfil {
             } catch (Exception e) {
                 return false;
             }
-        }
+        }*/
         return true;
     }
 }

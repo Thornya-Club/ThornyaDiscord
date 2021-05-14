@@ -1,14 +1,12 @@
-package thornyaplugin.thornyaplugin.discord.listener;
+package thornyadiscord.thornyadiscord.discord.listener;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.bukkit.Bukkit;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.awt.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -18,9 +16,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @SuppressWarnings("ALL")
 public class VerificarListener extends ListenerAdapter {
 
-    private final ThornyaPlugin pl;
+    private final ThornyaDiscord pl;
 
-    public VerificarListener(ThornyaPlugin main){
+    public VerificarListener(ThornyaDiscord main){
         this.pl = main;
     }
     public void sendEmbedSearch(String nickname){
@@ -55,8 +53,8 @@ public class VerificarListener extends ListenerAdapter {
                 if(args.length == 1){
                     if(pl.sqliv.hasVerifyID(e.getAuthor().getId())){
                         String nick = pl.sqliv.getNick(e.getAuthor().getId());
-                        String cargo = pl.ess.getUser(nick).getGroup().toLowerCase(Locale.ROOT);
-                        String roleID = pl.cD.cargosID.get(cargo);
+                        //String cargo = pl.ess.getUser(nick).getGroup().toLowerCase(Locale.ROOT);
+                        //String roleID = pl.cD.cargosID.get(cargo);
                         Map<String, String> roles = new HashMap<String, String>();
                         for (Role role : e.getMember().getRoles()) {
                             roles.put(role.getName().toLowerCase(Locale.ROOT), role.getId());
@@ -75,12 +73,13 @@ public class VerificarListener extends ListenerAdapter {
                             }*/
                         }
                         //arrumar essa merda
+                        /*
                         if(!roles.containsKey(cargo)){
                             e.getMessage().getChannel().sendMessage(e.getAuthor().getAsMention() + " Seu cargo " + cargo + " foi adicionado com sucesso!").complete();
                             e.getGuild().addRoleToMember(e.getMember(), e.getGuild().getRoleById(roleID)).queue();
                         }else{
                             e.getMessage().getChannel().sendMessage("Você já tem esse cargo!").complete();
-                        }
+                        }*/
                     }else{
                         e.getMessage().getChannel().sendMessage("❌ Você não é verificado! ❌").complete();
                     }
@@ -112,7 +111,7 @@ public class VerificarListener extends ListenerAdapter {
                                     if (playerOn.get()) {
                                         pl.sqliv.criarPlayer(e.getAuthor().getId(), c.getTimeInMillis(), args[1]);
                                         sendEmbedSearch(args[1]);
-                                        pl.sendServerVerify(args[1], e.getAuthor().getName() , e.getAuthor().getId(), e.getMember());
+                                        //pl.sendServerVerify(args[1], e.getAuthor().getName() , e.getAuthor().getId(), e.getMember());
 
                                     } else {
                                         e.getMessage().getChannel().sendMessage("Você não está online no servidor!").complete();

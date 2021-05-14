@@ -1,21 +1,22 @@
-package thornyaplugin.thornyaplugin.clans;
+package thornyadiscord.thornyadiscord.clans;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.requests.restaction.ChannelAction;
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.util.EnumSet;
 
 public class Clan {
-    private ThornyaPlugin pl;
+    private thornyadiscord.thornyadiscord.ThornyaDiscord pl;
 
-    public Clan(ThornyaPlugin main){
+    public Clan(ThornyaDiscord main){
         this.pl = main;
     }
 
     public void buyChannel(String tag, String userID, String nickname){
         long userIDNew = Long.parseLong(userID);
+
         Guild guild = pl.bot.getJDA().getGuildById("594364577618329620");
         ChannelAction<VoiceChannel> cV = guild.getCategoryById("792965102545535007").createVoiceChannel("\uD83D\uDEE1》 ClanVoz-" + tag);
         cV.addMemberPermissionOverride(userIDNew,  EnumSet.of(
@@ -29,7 +30,7 @@ public class Clan {
                 Permission.VOICE_SPEAK,
                 Permission.VIEW_CHANNEL,
                 Permission.CREATE_INSTANT_INVITE))
-                .setUserlimit(pl.sc.getSettingsManager().getClanMaxLength())
+                //.setUserlimit(pl.sc.getSettingsManager().getClanMaxLength())
                 .queue();
         //
         ChannelAction<TextChannel> cC = guild.getCategoryById("792965102545535007").createTextChannel("\uD83D\uDEE1》ClanChat-" + tag);
@@ -47,10 +48,10 @@ public class Clan {
                 Permission.MESSAGE_WRITE,
                 Permission.MESSAGE_READ,
                 Permission.CREATE_INSTANT_INVITE))
-                .setTopic("Chat de conversas do clan [" + pl.sc.getClanManager().getClanPlayer(nickname).getTag() + "] " + pl.sc.getClanManager().getClanPlayer(nickname).getClan().getName())
+                //.setTopic("Chat de conversas do clan [" + pl.sc.getClanManager().getClanPlayer(nickname).getTag() + "] " + pl.sc.getClanManager().getClanPlayer(nickname).getClan().getName())
                 .queue();
 
-        pl.cc.clansChannelUpdate();
+        //pl.cc.clansChannelUpdate();
 
     }
 
