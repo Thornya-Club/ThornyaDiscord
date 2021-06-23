@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import thornyadiscord.thornyadiscord.ThornyaDiscord;
+import thornyadiscord.thornyadiscord.discord.Embeds.Embeds;
 
 
 public class Verificar implements CommandExecutor {
@@ -27,8 +28,8 @@ public class Verificar implements CommandExecutor {
                             if (!pl.sqliv.hasVerifyNick(p.getName())) {
                                 String idDiscord = pl.sqliv.getIdDiscord(p.getName());
                                 pl.sqliv.updatePlayerVerify(p.getName());
-                                pl.emb.sendEmbedVerificado(p.getName());
-                                pl.emb.sendMessageInformando(pl.emb.getUserName(), p.getName(), true);
+                                Embeds.sendEmbedVerificado(p.getName(), pl);
+                                Embeds.sendMessageInformando(pl.emb.getUserName(p.getName()), p.getName(), true);
                             } else {
                                 p.sendMessage("§cVocê já é verificado!");
                             }
@@ -38,9 +39,8 @@ public class Verificar implements CommandExecutor {
                     } else if (args[0].equalsIgnoreCase("negar")) {
                         if (pl.sqliv.hasNick(p.getName())) {
                             if (!pl.sqliv.hasVerifyNick(p.getName())) {
-
-                                pl.emb.sendEmbedNegado(p.getName());
-                                pl.emb.sendMessageInformando(pl.emb.getUserName(), p.getName(), false);
+                                Embeds.sendEmbedNegado(p.getName());
+                                Embeds.sendMessageInformando(pl.emb.getUserName(p.getName()), p.getName(), false);
                                 pl.sqliv.deletePlayerNick(p.getName());
                             } else {
                                 p.sendMessage("§cVocê já é verificado!");
@@ -49,7 +49,7 @@ public class Verificar implements CommandExecutor {
                             p.sendMessage("§cVocê não nenhuma solicitação!");
                         }
                     } else if (args[0].equalsIgnoreCase("conta")) {
-
+                        //fazer
                     }
                 } else {
                     p.sendMessage("§cUse /verificar conta");

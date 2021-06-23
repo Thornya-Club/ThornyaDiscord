@@ -5,7 +5,11 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.bukkit.Bukkit;
 import thornyadiscord.thornyadiscord.ThornyaDiscord;
 import thornyadiscord.thornyadiscord.discord.listener.BotListener;
@@ -34,6 +38,8 @@ public class BotManager {
             String token = pl.getFile("configuration.yml").getString("token");
             try {
                 this.jda = JDABuilder.createDefault(token)
+                        .enableCache(CacheFlag.VOICE_STATE, CacheFlag.MEMBER_OVERRIDES, CacheFlag.ROLE_TAGS, CacheFlag.CLIENT_STATUS)
+                        .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
                         .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES)
                         .setActivity(Activity.playing(Objects.requireNonNull(pl.getFile("configuration.yml").getString("description"))))
                         .addEventListeners(new OnJoin(pl))

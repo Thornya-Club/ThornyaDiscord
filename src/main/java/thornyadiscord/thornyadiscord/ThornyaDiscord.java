@@ -1,6 +1,7 @@
 package thornyadiscord.thornyadiscord;
 
 
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -50,8 +51,9 @@ public final class ThornyaDiscord extends JavaPlugin {
         bot.getJDA().shutdown();
         bot.getJDA().shutdownNow();
     }
+
     public void registrarComandos(){
-        registrarComando("clans", new ClanCommand(this));
+        //registrarComando("clans", new ClanCommand(this));
         registrarComando("verificar", new Verificar(this));
     }
     public void registrarComando(String nome, CommandExecutor comando) {

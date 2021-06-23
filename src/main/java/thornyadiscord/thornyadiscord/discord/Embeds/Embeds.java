@@ -7,17 +7,28 @@ import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class Embeds {
-    private Member m;
     private final ThornyaDiscord pl;
 
     public Embeds(ThornyaDiscord main){
         this.pl = main;
     }
 
-    public void sendEmbedNegado(String nickname) {
+    public void sendEmbedSearch(String nickname){
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setColor(new Color(0xFFDD00))
+                .setDescription("\uD83D\uDD0E Sua solicitação foi enviada para [{nick}]".replace("{nick}", nickname))
+                .addField("Informações", "Você deve estar online!\nVocê tem 1 minuto para responder a solicitação!", false)
+                .setFooter("Verificação do Servidor", "https://minotar.net/avatar/robot");
+        //794042606061223946 - verify
+        //654791407374172169 - progm
+        pl.bot.guild.getTextChannelById("794042606061223946").sendMessage(eb.build()).complete();
+    }
+
+    public static void sendEmbedNegado(String nickname) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(new Color(0xFFFF0000, true))
                 .setTitle("Verificação não autorizada!")
@@ -25,10 +36,10 @@ public class Embeds {
                 .setFooter("Verificação do Servidor", "https://minotar.net/avatar/robot");
         //bot.getJDA().getTextChannelById("794042606061223946").sendMessage(eb.build()).complete();
     }
-    public String getUserName(){
-        return m.getEffectiveName();
+    public String getUserName(String username){
+        return pl.bot.guild.getMemberById(pl.sqliv.getIdDiscord(username)).getEffectiveName();
     }
-    public void sendMessageInformando(String user, String nickname, boolean situacao){
+    public static void sendMessageInformando(String user, String nickname, boolean situacao){
         if(situacao){
             if(Bukkit.getServer().getPlayer(nickname).isOnline()){
                 for(int i = 0; i <= 100; i++){
@@ -51,18 +62,19 @@ public class Embeds {
             }
         }
     }
-    public void sendEmbedVerificado(String username){
+    public static void sendEmbedVerificado(String username, ThornyaDiscord pl){
+        Member membro = pl.bot.guild.getMemberById(pl.sqliv.getIdDiscord(username));
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("✅ Verificado com Sucesso ✅")
                 .setDescription("**-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-**")
                 .setColor(new Color(4886754))
                 .setFooter("Verificação do Servidor", "https://minotar.net/avatar/robot")
                 .addField("Minecraft", username, false)
-                .addField("Discord", m.getAsMention(), false);
-        m.getGuild().getTextChannelById("794042606061223946").sendMessage(eb.build()).complete();
-        m.getGuild().addRoleToMember(m.getId(), m.getGuild().getRoleById("794106928145760266")).complete();
+                .addField("Discord", membro.getAsMention(), false);
+        Objects.requireNonNull(membro.getGuild().getTextChannelById("794042606061223946")).sendMessage(eb.build()).complete();
+        membro.getGuild().addRoleToMember(membro.getId(), Objects.requireNonNull(membro.getGuild().getRoleById("794106928145760266"))).complete();
         try{
-            m.modifyNickname(username).queue();
+            membro.modifyNickname(username).queue();
         }catch (NullPointerException e){
             System.out.println("Nick não pode ser modificado: " + e.getStackTrace());
             System.out.println("Nick não pode ser modificado: " + e.getCause());
@@ -71,8 +83,7 @@ public class Embeds {
 
     }
 
-    public void sendServerVerify(String nickname, String nametag, String ID, Member membro){
-        this.m = membro;
+    public void sendServerVerify(String nickname, String nametag, String ID){
         Bukkit.getOnlinePlayers().forEach(online -> {
             if(online.getName().equals(nickname)) {
                 ArrayList<String> messageVerify = new ArrayList<>();

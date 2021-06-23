@@ -1,10 +1,15 @@
 package thornyadiscord.thornyadiscord.discord.listener;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import thornyadiscord.thornyadiscord.ThornyaDiscord;
+import thornyadiscord.thornyadiscord.discord.Embeds.Embeds;
 
 import java.awt.*;
 import java.util.Calendar;
@@ -18,18 +23,58 @@ public class VerificarListener extends ListenerAdapter {
 
     private final ThornyaDiscord pl;
 
+
     public VerificarListener(ThornyaDiscord main){
         this.pl = main;
     }
-    public void sendEmbedSearch(String nickname){
-        EmbedBuilder eb = new EmbedBuilder();
-        eb.setColor(new Color(0xFFDD00))
-                .setDescription("\uD83D\uDD0E Sua solicitação foi enviada para [{nick}]".replace("{nick}", nickname))
-                .addField("Informações", "Você deve estar online!\nVocê tem 1 minuto para responder a solicitação!", false)
-                .setFooter("Verificação do Servidor", "https://minotar.net/avatar/robot");
-        //794042606061223946 - verify
-        //654791407374172169 - progm
-        pl.bot.guild.getTextChannelById("794042606061223946").sendMessage(eb.build()).complete();
+    public void commandVerificar(String cmd, GuildMessageReceivedEvent e, String[] args){
+
+        if(cmd.equalsIgnoreCase(ThornyaDiscord.PREFIX + "verificar") ){
+            if(e.getMessage().getChannel().getId().equalsIgnoreCase("794042606061223946")) {
+                if(args.length == 1){
+                    /*
+                    if (!pl.sqliv.hasVerifyID(e.getAuthor().getId())) {
+                        if (pl.sqliv.getTimestamp(e.getAuthor().getId()) == 0) {
+                            if (!pl.sqliv.hasVerifyNick(args[1])) {
+                                if (!pl.getServer().getOnlinePlayers().isEmpty()) {
+                                    AtomicBoolean playerOn = new AtomicBoolean(false);
+                                    pl.getServer().getOnlinePlayers().forEach(player -> {
+                                        if (player.getName().equalsIgnoreCase(args[1])) {
+                                            playerOn.set(true);
+                                        }
+                                    });
+                                    if (playerOn.get()) {
+                                        pl.sqliv.criarPlayer(e.getAuthor().getId(), c.getTimeInMillis(), args[1]);
+                                        sendEmbedSearch(args[1]);
+                                        //Embeds.sendEmbedVerificado(args[1], e.getAuthor().getName() , e.getAuthor().getId());
+
+                                    } else {
+                                        e.getMessage().getChannel().sendMessage("Você não está online no servidor!").complete();
+                                    }
+                                } else {
+                                    e.getMessage().getChannel().sendMessage("Servidor vazio! Entre no servidor para se regisrar.").complete();
+                                }
+                            } else {
+                                e.getMessage().getChannel().sendMessage("Esse jogador já é verificado!").complete();
+                            }
+
+                        } else {
+                            if (pl.sqliv.getTimestamp(e.getAuthor().getId()) > System.currentTimeMillis()) {
+                                e.getMessage().getChannel().sendMessage("Você já tem uma verificação em processo!").complete();
+                            } else {
+                                pl.sqliv.deletePlayerID(e.getAuthor().getId());
+                                e.getMessage().getChannel().sendMessage("Digite o comando novamente para atualizar seus dados!").complete();
+                            }
+                        }
+                    }*/
+                }else{
+                    e.getMessage().getChannel().sendMessage("Use **$verificar**").complete();
+                }
+            }else{
+                e.getMessage().getChannel().sendMessage("Use o canal " + e.getGuild().getTextChannelById("794042606061223946").getAsMention() + " para o uso desse comando!" ).complete();
+            }
+        }
+
     }
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
@@ -47,8 +92,8 @@ public class VerificarListener extends ListenerAdapter {
             });
         }
         */
-
-        if(cmd.equalsIgnoreCase(pl.getFile("configuration.yml").getString("prefix") + "pedircargo") ){
+        /*
+        if(cmd.equalsIgnoreCase( ThornyaDiscord.PREFIX + "pedircargo") ){
             if(e.getMessage().getChannel().getId().equalsIgnoreCase("794141675693146163")) {
                 if(args.length == 1){
                     if(pl.sqliv.hasVerifyID(e.getAuthor().getId())){
@@ -70,7 +115,7 @@ public class VerificarListener extends ListenerAdapter {
                             } else {
                                 e.getMessage().getChannel().sendMessage("Cargo superior devem ser adicionados manualmente!").complete();
                                 break;
-                            }*/
+                            }
                         }
                         //arrumar essa merda
                         /*
@@ -79,7 +124,7 @@ public class VerificarListener extends ListenerAdapter {
                             e.getGuild().addRoleToMember(e.getMember(), e.getGuild().getRoleById(roleID)).queue();
                         }else{
                             e.getMessage().getChannel().sendMessage("Você já tem esse cargo!").complete();
-                        }*/
+                        }
                     }else{
                         e.getMessage().getChannel().sendMessage("❌ Você não é verificado! ❌").complete();
                     }
@@ -90,58 +135,9 @@ public class VerificarListener extends ListenerAdapter {
                 e.getMessage().getChannel().sendMessage("Use o canal " + e.getGuild().getTextChannelById("794141675693146163").getAsMention() + " para o uso desse comando!").complete();
             }
 
-
         }
+        */
 
-        if(cmd.equalsIgnoreCase(pl.getFile("configuration.yml").getString("prefix") + "verificar") ){
-            if(e.getMessage().getChannel().getId().equalsIgnoreCase("794042606061223946")) {
-                Calendar c = Calendar.getInstance();
-                c.add(Calendar.MINUTE, 1);
-                if(args.length == 2){
-                    if (!pl.sqliv.hasVerifyID(e.getAuthor().getId())) {
-                        if (pl.sqliv.getTimestamp(e.getAuthor().getId()) == 0) {
-                            if (!pl.sqliv.hasVerifyNick(args[1])) {
-                                if (!pl.getServer().getOnlinePlayers().isEmpty()) {
-                                    AtomicBoolean playerOn = new AtomicBoolean(false);
-                                    pl.getServer().getOnlinePlayers().forEach(player -> {
-                                        if (player.getName().equalsIgnoreCase(args[1])) {
-                                            playerOn.set(true);
-                                        }
-                                    });
-                                    if (playerOn.get()) {
-                                        pl.sqliv.criarPlayer(e.getAuthor().getId(), c.getTimeInMillis(), args[1]);
-                                        sendEmbedSearch(args[1]);
-                                        //pl.sendServerVerify(args[1], e.getAuthor().getName() , e.getAuthor().getId(), e.getMember());
-
-                                    } else {
-                                        e.getMessage().getChannel().sendMessage("Você não está online no servidor!").complete();
-                                    }
-                                } else {
-                                    e.getMessage().getChannel().sendMessage("Servidor vazio! Entre no servidor para se regisrar.").complete();
-                                }
-                            } else {
-                                e.getMessage().getChannel().sendMessage("Esse jogador já é verificado!").complete();
-                            }
-
-                        } else {
-                            if (pl.sqliv.getTimestamp(e.getAuthor().getId()) > System.currentTimeMillis()) {
-                                e.getMessage().getChannel().sendMessage("Você já tem uma verificação em processo!").complete();
-                            } else {
-                                pl.sqliv.deletePlayerID(e.getAuthor().getId());
-                                e.getMessage().getChannel().sendMessage("Digite o comando novamente para atualizar seus dados!").complete();
-                            }
-                        }
-                    }else {
-                        e.getMessage().getChannel().sendMessage("Você já é verificado!").complete();
-                    }
-
-                }else{
-                    e.getMessage().getChannel().sendMessage("Use **$verificar nick**").complete();
-                }
-            }else{
-                e.getMessage().getChannel().sendMessage("Use o canal " + e.getGuild().getTextChannelById("794042606061223946").getAsMention() + " para o uso desse comando!" ).complete();
-            }
-        }
     }
 
 }

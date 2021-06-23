@@ -1,6 +1,6 @@
-ackage thornyaplugin.thornyaplugin.vars;
+package thornyadiscord.thornyadiscord.vars;
 
-import thornyaplugin.thornyaplugin.ThornyaPlugin;
+import thornyadiscord.thornyadiscord.ThornyaDiscord;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +8,9 @@ import java.util.Map;
 public class cargosDiscord {
 
     public Map<String, String> cargosID = new HashMap<String, String>();
-    private ThornyaPlugin pl;
+    private ThornyaDiscord pl;
 
-    public cargosDiscord (ThornyaPlugin main){
+    public cargosDiscord (ThornyaDiscord main){
         this.pl = main;
         cargosDiscordUpdate();
     }
